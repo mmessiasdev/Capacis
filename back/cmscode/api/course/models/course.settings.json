@@ -1,0 +1,35 @@
+{
+  "kind": "collectionType",
+  "collectionName": "courses",
+  "info": {
+    "name": "Course"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "desc": {
+      "type": "string"
+    },
+    "nivel": {
+      "type": "string"
+    },
+    "time": {
+      "type": "integer"
+    },
+    "enterprise": {
+      "model": "enterprise",
+      "via": "courses"
+    },
+    "videos": {
+      "via": "course",
+      "collection": "video"
+    }
+  }
+}

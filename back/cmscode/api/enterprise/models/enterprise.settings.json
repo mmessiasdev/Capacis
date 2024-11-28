@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "enterprises",
+  "info": {
+    "name": "Enterprise",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "desc": {
+      "type": "string"
+    },
+    "profile": {
+      "model": "profile",
+      "via": "enterprise"
+    },
+    "courses": {
+      "via": "enterprise",
+      "collection": "course"
+    }
+  }
+}

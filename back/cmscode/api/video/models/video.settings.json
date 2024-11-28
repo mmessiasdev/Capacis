@@ -1,0 +1,35 @@
+{
+  "kind": "collectionType",
+  "collectionName": "videos",
+  "info": {
+    "name": "Video",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "desc": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string"
+    },
+    "time": {
+      "type": "decimal"
+    },
+    "public": {
+      "type": "boolean"
+    },
+    "course": {
+      "model": "course",
+      "via": "videos"
+    }
+  }
+}
