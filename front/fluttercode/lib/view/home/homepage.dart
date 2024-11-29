@@ -1,8 +1,13 @@
 import 'package:Consult/component/buttons.dart';
 import 'package:Consult/component/containersLoading.dart';
+import 'package:Consult/component/contentproduct.dart';
 import 'package:Consult/component/inputdefault.dart';
 import 'package:Consult/component/widgets/header.dart';
+import 'package:Consult/component/widgets/iconlist.dart';
+import 'package:Consult/component/widgets/searchInput.dart';
 import 'package:Consult/controller/auth.dart';
+import 'package:Consult/model/courses.dart';
+import 'package:Consult/service/remote/auth.dart';
 import 'package:Consult/view/account/account.dart';
 import 'package:Consult/view/courses/addcourse.dart';
 import 'package:flutter/material.dart';
@@ -42,28 +47,17 @@ class _HomePageState extends State<HomePage> {
 
   void getString() async {
     var strToken = await LocalAuthService().getSecureToken("token");
-    var strFullname = await LocalAuthService().getFullName("fullname");
+    var strfullname = await LocalAuthService().getFullName("fullname");
 
-    // var strCpf = await LocalAuthService().getCpf("cpf");
-
-    // Verifique se o widget ainda está montado antes de chamar setState
     if (mounted) {
       setState(() {
-        // Caso strCpf seja null, passamos uma string vazia
-        // cpf.text = strCpf ?? ''; // Usa uma string vazia se strCpf for null
         token = strToken;
-        fullname = strFullname;
+        fullname = strfullname;
       });
     }
   }
 
   TextEditingController cpf = TextEditingController();
-
-  @override
-  void dispose() {
-    cpf.dispose();
-    super.dispose();
-  }
 
   Widget ManutentionErro() {
     return ErrorPost(
@@ -83,53 +77,49 @@ class _HomePageState extends State<HomePage> {
                 color: Colors.white,
                 child: Padding(
                   padding: defaultPadding,
-                  child: ListView(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                            color: SecudaryColor,
-                            borderRadius: BorderRadius.circular(10)),
-                        child: GestureDetector(
-                          onTap: () {
-                            (
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => AddCourseScreen()),
-                              ),
-                            );
-                          },
-                          child: Padding(
-                            padding: defaultPadding,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: SecudaryColor,
+                        borderRadius: BorderRadius.circular(10)),
+                    child: GestureDetector(
+                      onTap: () {
+                        (
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => AddCourseScreen()),
+                          ),
+                        );
+                      },
+                      child: Padding(
+                        padding: defaultPadding,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(Icons.person),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Column(
                               children: [
-                                const Icon(Icons.person),
-                                const SizedBox(
-                                  width: 10,
+                                SubText(
+                                  text: 'Meu Perfil',
+                                  align: TextAlign.start,
+                                  color: nightColor,
                                 ),
-                                Column(
-                                  children: [
-                                    SubText(
-                                      text: 'Meu Perfil',
-                                      align: TextAlign.start,
-                                      color: nightColor,
-                                    ),
-                                    SubTextSized(
-                                      text:
-                                          'Verificar informações e sair da conta',
-                                      size: 10,
-                                      fontweight: FontWeight.w600,
-                                      color: OffColor,
-                                    )
-                                  ],
+                                SubTextSized(
+                                  text:
+                                      'Verificar informações e sair da conta',
+                                  size: 10,
+                                  fontweight: FontWeight.w600,
+                                  color: OffColor,
                                 )
                               ],
-                            ),
-                          ),
+                            )
+                          ],
                         ),
-                      )
-                    ],
+                      ),
+                    ),
                   ),
                 ));
           },
@@ -140,6 +130,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    print(token);
+    print(fullname);
     return token == null
         ? const SizedBox()
         : SafeArea(
@@ -149,8 +141,9 @@ class _HomePageState extends State<HomePage> {
                   Padding(
                     padding: defaultPaddingHorizon,
                     child: MainHeader(
-                      title: "NIDE Academy",
+                      title: fullname.toString(),
                       icon: Icons.menu,
+                      maxl: 2,
                       onClick: () => _showDraggableScrollableSheet(context),
                     ),
                   ),
@@ -158,90 +151,136 @@ class _HomePageState extends State<HomePage> {
                     height: 25,
                   ),
                   Padding(
-                    padding: defaultPadding,
+                    padding: defaultPaddingHorizon,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
+                        SearchInput(),
+                        SizedBox(
+                          height: 25,
+                        ),
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            CircleAvatar(
-                              child: Icon(
-                                Icons.people,
-                                color: lightColor,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 15,
-                            ),
-                            RichDefaultText(
-                              text: 'Olá, \n',
-                              size: 20,
-                              wid: SecundaryText(
-                                  text: '${fullname.toString()}!',
-                                  color: nightColor,
-                                  align: TextAlign.start),
+                            IconList(
+                                onClick: () {},
+                                icon: Icons.movie,
+                                title: "Nossos cursos"),
+                            IconList(
+                                onClick: () {},
+                                icon: Icons.people,
+                                title: "Colaboradores"),
+                            IconList(
+                              onClick: () {},
+                              icon: Icons.person_pin_circle_sharp,
+                              title: "Indicadores",
                             ),
                           ],
-                        )
+                        ),
+                        SizedBox(
+                          height: 25,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            (
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => AddCourseScreen()),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: PrimaryColor,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Padding(
+                              padding: defaultPadding,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.add),
+                                  SubText(
+                                      text: "Adicionar Curso",
+                                      align: TextAlign.start)
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 250, // Altura definida para o ListView
+                          child: FutureBuilder<List<CoursesModel>>(
+                            future:
+                                RemoteAuthService().getCourses(token: token),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                      ConnectionState.done &&
+                                  snapshot.hasData) {
+                                if (snapshot.data!.isEmpty) {
+                                  return const Center(
+                                    child: Text(
+                                        "Nenhuma loja disponível no momento."),
+                                  );
+                                } else {
+                                  return ListView.builder(
+                                    shrinkWrap: true,
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: snapshot.data!.length,
+                                    itemBuilder: (context, index) {
+                                      var renders = snapshot.data![index];
+                                      return ContentProduct(
+                                        urlLogo: renders.title.toString(),
+                                        drules: "${renders.desc}",
+                                        title: renders.time.toString(),
+                                        id: renders.id.toString(),
+                                      );
+                                    },
+                                  );
+                                }
+                              } else if (snapshot.hasError) {
+                                return WidgetLoading();
+                              }
+                              return SizedBox(
+                                height: 300,
+                                child: Center(
+                                  child: CircularProgressIndicator(
+                                    color: nightColor,
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                        // Row(
+                        //   children: [
+                        //     CircleAvatar(
+                        //       child: Icon(
+                        //         Icons.people,
+                        //         color: lightColor,
+                        //       ),
+                        //     ),
+                        //     SizedBox(
+                        //       width: 15,
+                        //     ),
+                        //     RichDefaultText(
+                        //       text: 'Olá, \n',
+                        //       size: 20,
+                        //       wid: SecundaryText(
+                        //           text: '${fullname.toString()}!',
+                        //           color: nightColor,
+                        //           align: TextAlign.start),
+                        //     ),
+                        //   ],
+                        // )
                       ],
                     ),
                   ),
                   Expanded(
-                    child: Padding(
-                      padding: defaultPadding,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const SizedBox(
-                            height: 50,
-                          ),
-                          Builder(builder: (context) {
-                            return GestureDetector(
-                              onTap: () {
-                                if (cpf.text.length >= 11) {
-                                  print(cpf.text);
-                                  AuthController().requests(
-                                    cpf: cpf.text,
-                                    colaboratorId: colaboratorId.toString(),
-                                    fullname: fullname.toString(),
-                                    resultReq: "Teste",
-                                  );
-                                } else {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                        content: Text(
-                                            'CPF deve ter no mínimo 11 caracteres')),
-                                  );
-                                }
-                              },
-                              child: GestureDetector(
-                                onTap: isButtonEnabled
-                                    ? () {
-                                        print(cpf.text);
-                                        AuthController().requests(
-                                          cpf: cpf.text,
-                                          colaboratorId:
-                                              colaboratorId.toString(),
-                                          fullname: fullname.toString(),
-                                          resultReq: "Teste",
-                                        );
-                                      }
-                                    : null,
-                                child: DefaultButton(
-                                  text: "Consultar",
-                                  padding: defaultPadding,
-                                  icon: Icons.keyboard_arrow_right_outlined,
-                                  color: SeventhColor,
-                                  colorText: lightColor,
-                                  // Desabilita o botão se o CPF for menor que 11 caracteres
-                                ),
-                              ),
-                            );
-                          }),
-                        ],
-                      ),
-                    ),
+                    child: SizedBox(),
                   ),
                 ],
               ),

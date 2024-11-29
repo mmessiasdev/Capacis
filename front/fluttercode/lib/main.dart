@@ -13,7 +13,7 @@ import 'package:flutter/services.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized(); // Required by FlutterConfig
-  await dotenv.load(fileName: ".env");
+  await dotenv.load(fileName: ".env");  
   // Bloqueando a rotação da tela para o modo retrato (portrait)
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp, // Retrato normal

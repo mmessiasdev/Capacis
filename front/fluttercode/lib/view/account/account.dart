@@ -58,53 +58,53 @@ class _AccountScreenState extends State<AccountScreen> {
               buttom: widget.buttom,
               title: "Seu perfil.",
             ),
-            Column(
-              children: [
-                InfoText(
-                  title: "Nome:",
-                  stitle: fullname == "null" ? "" : fullname,
-                  icon: Icons.people,
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                InfoText(
-                  title: "Email:",
-                  stitle: email == "null" ? "" : email,
-                  icon: Icons.email,
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                // InfoText(title: "Username:", stitle: cpf == "null" ? "" : cpf),
-                SizedBox(
-                  height: 70,
-                ),
-                DefaultTitleButton(
-                  title: email == "null" ? "Entrar na conta" : "Sair da conta",
-                  onClick: () {
-                    if (token != "null") {
-                      authController.signOut(context);
-                      // Navigator.pop(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: (context) => const SignInScreen(),
-                      //   ),
-                      // );
-                    } else {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const SignInScreen(),
-                        ),
-                      );
-                    }
-                  },
-                  color: FifthColor,
-                  iconColor: lightColor,
-                ),
-              ],
-            ),
+            // Column(
+            //   children: [
+            //     InfoText(
+            //       title: "Nome:",
+            //       stitle: fullname == "null" ? "" : fullname,
+            //       icon: Icons.people,
+            //     ),
+            //     SizedBox(
+            //       height: 20,
+            //     ),
+            //     InfoText(
+            //       title: "Email:",
+            //       stitle: email == "null" ? "" : email,
+            //       icon: Icons.email,
+            //     ),
+            //     SizedBox(
+            //       height: 20,
+            //     ),
+            //     // InfoText(title: "Username:", stitle: cpf == "null" ? "" : cpf),
+            //     SizedBox(
+            //       height: 70,
+            //     ),
+            //     DefaultTitleButton(
+            //       title: email == "null" ? "Entrar na conta" : "Sair da conta",
+            //       onClick: () {
+            //         if (token != "null") {
+            //           authController.signOut(context);
+            //           // Navigator.pop(
+            //           //   context,
+            //           //   MaterialPageRoute(
+            //           //     builder: (context) => const SignInScreen(),
+            //           //   ),
+            //           // );
+            //         } else {
+            //           Navigator.push(
+            //             context,
+            //             MaterialPageRoute(
+            //               builder: (context) => const SignInScreen(),
+            //             ),
+            //           );
+            //         }
+            //       },
+            //       color: FifthColor,
+            //       iconColor: lightColor,
+            //     ),
+            //   ],
+            // ),
           ],
         ),
       ),

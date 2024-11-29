@@ -30,7 +30,12 @@ class MainHeader extends StatelessWidget {
               child: PrimaryText(
                 color: nightColor,
                 text: title,
+                over: TextOverflow.fade,
+                maxl: maxl,
               ),
+            ),
+            SizedBox(
+              width: 15,
             ),
             GestureDetector(
               onTap: () => onClick!(),

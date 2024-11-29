@@ -11,22 +11,16 @@ class LocalAuthService {
     return await _storage.read(key: "token");
   }
 
-  Future<void> storeCpfClient(String CpfClient) async {
-    await _storage.write(key: "cpfClient", value: CpfClient);
-  }
-
-  Future<String?> getCpfClient(String CpfClient) async {
-    return await _storage.read(key: "cpfClient");
-  }
-
   Future storeAccount({
     required String email,
     required String fullname,
+    required String cpf,
     required int id,
   }) async {
     await _storage.write(key: "id", value: id.toString());
     await _storage.write(key: "email", value: email);
     await _storage.write(key: "fullname", value: fullname);
+    await _storage.write(key: "cpf", value: cpf.toString());
   }
 
   Future<String?> getEmail(String unicKey) async {
@@ -41,11 +35,11 @@ class LocalAuthService {
     return await _storage.read(key: "fullname");
   }
 
+  Future<String?> getCpf(String unicKey) async {
+    return await _storage.read(key: "cpf");
+  }
+
   Future<void> clear() async {
-    try {
-      await _storage.deleteAll();
-    } catch (e) {
-      print('Erro ao apagar dados: $e');
-    }
+    await _storage.deleteAll();
   }
 }

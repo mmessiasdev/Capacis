@@ -1,5 +1,6 @@
 import 'package:Consult/service/local/auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -9,27 +10,27 @@ class AddCourseScreen extends StatefulWidget {
 }
 
 class _AddCourseScreenState extends State<AddCourseScreen> {
-  var token;
+  String? token;
+  int? id;
+
+  String? urlEnv = dotenv.env["BASEURL"];
+
+  @override
+  void initState() {
+    super.initState();
+    getString();
+  }
 
   void getString() async {
     var strToken = await LocalAuthService().getSecureToken("token");
+    var strId = await LocalAuthService().getId("id");
 
-    // var strCpf = await LocalAuthService().getCpf("cpf");
-
-    // Verifique se o widget ainda está montado antes de chamar setState
     if (mounted) {
       setState(() {
-        // Caso strCpf seja null, passamos uma string vazia
-        // cpf.text = strCpf ?? ''; // Usa uma string vazia se strCpf for null
         token = strToken;
+        id = int.parse(strId!);
       });
     }
-  }
-
-  @override
-  void dispose() {
-    token.dispose();
-    super.dispose();
   }
 
   final TextEditingController _courseNameController = TextEditingController();
@@ -42,18 +43,15 @@ class _AddCourseScreenState extends State<AddCourseScreen> {
       TextEditingController();
   final TextEditingController _videoUrlController = TextEditingController();
 
-  String apiUrl =
-      "https://2ee4-2a09-bac5-633-1c96-00-2d9-1a.ngrok-free.app/courses"; // Substitua pelo URL da sua API
-
   Future<void> sendCourse() async {
     print(token.toString());
+    print(id);
     try {
       // 1. Cria os vídeos e salva os IDs gerados
       List<int> videoIds = [];
       for (var video in videos) {
         final videoResponse = await http.post(
-          Uri.parse(
-              "https://2ee4-2a09-bac5-633-1c96-00-2d9-1a.ngrok-free.app/videos"),
+          Uri.parse("$urlEnv/videos"),
           headers: {
             "Content-Type": "application/json",
             "Authorization": "Bearer $token",
@@ -79,12 +77,12 @@ class _AddCourseScreenState extends State<AddCourseScreen> {
       Map<String, dynamic> courseData = {
         "title": _courseNameController.text,
         "desc": _courseDescriptionController.text,
+        "enterprise": id,
         "videos": videoIds, // Relaciona os IDs dos vídeos ao curso
       };
 
       final courseResponse = await http.post(
-        Uri.parse(
-            "https://2ee4-2a09-bac5-633-1c96-00-2d9-1a.ngrok-free.app/courses"),
+        Uri.parse("$urlEnv/courses"),
         headers: {
           "Content-Type": "application/json",
           "Authorization": "Bearer $token",

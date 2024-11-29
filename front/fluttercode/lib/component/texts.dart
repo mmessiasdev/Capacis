@@ -26,7 +26,7 @@ class PrimaryText extends StatelessWidget {
         overflow: over,
         textAlign: align ?? TextAlign.start,
         style: GoogleFonts.montserrat(
-          fontSize: 30,
+          fontSize: 40,
           textStyle: TextStyle(
               height: 1,
               color: color,
