@@ -77,49 +77,53 @@ class _HomePageState extends State<HomePage> {
                 color: Colors.white,
                 child: Padding(
                   padding: defaultPadding,
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: SecudaryColor,
-                        borderRadius: BorderRadius.circular(10)),
-                    child: GestureDetector(
-                      onTap: () {
-                        (
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => AddCourseScreen()),
-                          ),
-                        );
-                      },
-                      child: Padding(
-                        padding: defaultPadding,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Icon(Icons.person),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Column(
+                  child: ListView(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                            color: SecudaryColor,
+                            borderRadius: BorderRadius.circular(10)),
+                        child: GestureDetector(
+                          onTap: () {
+                            (
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => AddCourseScreen()),
+                              ),
+                            );
+                          },
+                          child: Padding(
+                            padding: defaultPadding,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                SubText(
-                                  text: 'Meu Perfil',
-                                  align: TextAlign.start,
-                                  color: nightColor,
+                                const Icon(Icons.person),
+                                const SizedBox(
+                                  width: 10,
                                 ),
-                                SubTextSized(
-                                  text:
-                                      'Verificar informações e sair da conta',
-                                  size: 10,
-                                  fontweight: FontWeight.w600,
-                                  color: OffColor,
+                                Column(
+                                  children: [
+                                    SubText(
+                                      text: 'Meu Perfil',
+                                      align: TextAlign.start,
+                                      color: nightColor,
+                                    ),
+                                    SubTextSized(
+                                      text:
+                                          'Verificar informações e sair da conta',
+                                      size: 10,
+                                      fontweight: FontWeight.w600,
+                                      color: OffColor,
+                                    )
+                                  ],
                                 )
                               ],
-                            )
-                          ],
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
+                      )
+                    ],
                   ),
                 ));
           },
@@ -135,155 +139,153 @@ class _HomePageState extends State<HomePage> {
     return token == null
         ? const SizedBox()
         : SafeArea(
-            child: SizedBox(
-              child: Column(
-                children: [
-                  Padding(
-                    padding: defaultPaddingHorizon,
-                    child: MainHeader(
-                      title: fullname.toString(),
-                      icon: Icons.menu,
-                      maxl: 2,
-                      onClick: () => _showDraggableScrollableSheet(context),
-                    ),
+            child: ListView(
+              children: [
+                Padding(
+                  padding: defaultPaddingHorizon,
+                  child: MainHeader(
+                    title: fullname.toString(),
+                    icon: Icons.menu,
+                    maxl: 2,
+                    onClick: () => _showDraggableScrollableSheet(context),
                   ),
-                  SizedBox(
-                    height: 25,
-                  ),
-                  Padding(
-                    padding: defaultPaddingHorizon,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        SearchInput(),
-                        SizedBox(
-                          height: 25,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            IconList(
-                                onClick: () {},
-                                icon: Icons.movie,
-                                title: "Nossos cursos"),
-                            IconList(
-                                onClick: () {},
-                                icon: Icons.people,
-                                title: "Colaboradores"),
-                            IconList(
+                ),
+                SizedBox(
+                  height: 25,
+                ),
+                Padding(
+                  padding: defaultPaddingHorizon,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      SearchInput(),
+                      SizedBox(
+                        height: 25,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          IconList(
                               onClick: () {},
-                              icon: Icons.person_pin_circle_sharp,
-                              title: "Indicadores",
+                              icon: Icons.movie,
+                              title: "Nossos cursos"),
+                          IconList(
+                              onClick: () {},
+                              icon: Icons.people,
+                              title: "Colaboradores"),
+                          IconList(
+                            onClick: () {},
+                            icon: Icons.person_pin_circle_sharp,
+                            title: "Indicadores",
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 25,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          (
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => AddCourseScreen()),
                             ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 25,
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            (
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => AddCourseScreen()),
-                              ),
-                            );
-                          },
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: PrimaryColor,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Padding(
-                              padding: defaultPadding,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Icon(Icons.add),
-                                  SubText(
-                                      text: "Adicionar Curso",
-                                      align: TextAlign.start)
-                                ],
-                              ),
+                          );
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: PrimaryColor,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Padding(
+                            padding: defaultPadding,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Icon(Icons.add),
+                                SubText(
+                                    text: "Adicionar Curso",
+                                    align: TextAlign.start)
+                              ],
                             ),
                           ),
                         ),
-                        SizedBox(
-                          height: 250, // Altura definida para o ListView
-                          child: FutureBuilder<List<CoursesModel>>(
-                            future:
-                                RemoteAuthService().getCourses(token: token),
-                            builder: (context, snapshot) {
-                              if (snapshot.connectionState ==
-                                      ConnectionState.done &&
-                                  snapshot.hasData) {
-                                if (snapshot.data!.isEmpty) {
-                                  return const Center(
-                                    child: Text(
-                                        "Nenhuma loja disponível no momento."),
-                                  );
-                                } else {
-                                  return ListView.builder(
-                                    shrinkWrap: true,
-                                    scrollDirection: Axis.horizontal,
-                                    itemCount: snapshot.data!.length,
-                                    itemBuilder: (context, index) {
-                                      var renders = snapshot.data![index];
-                                      return ContentProduct(
-                                        urlLogo: renders.title.toString(),
-                                        drules: "${renders.desc}",
-                                        title: renders.time.toString(),
-                                        id: renders.id.toString(),
-                                      );
-                                    },
-                                  );
-                                }
-                              } else if (snapshot.hasError) {
-                                return WidgetLoading();
-                              }
-                              return SizedBox(
-                                height: 300,
-                                child: Center(
-                                  child: CircularProgressIndicator(
-                                    color: nightColor,
-                                  ),
-                                ),
+                      ),
+                      FutureBuilder<List<CoursesModel>>(
+                        future: RemoteAuthService().getCourses(token: token),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                                  ConnectionState.done &&
+                              snapshot.hasData) {
+                            if (snapshot.data!.isEmpty) {
+                              return const Center(
+                                child: Text(
+                                    "Nenhuma loja disponível no momento."),
                               );
-                            },
-                          ),
-                        ),
-                        // Row(
-                        //   children: [
-                        //     CircleAvatar(
-                        //       child: Icon(
-                        //         Icons.people,
-                        //         color: lightColor,
-                        //       ),
-                        //     ),
-                        //     SizedBox(
-                        //       width: 15,
-                        //     ),
-                        //     RichDefaultText(
-                        //       text: 'Olá, \n',
-                        //       size: 20,
-                        //       wid: SecundaryText(
-                        //           text: '${fullname.toString()}!',
-                        //           color: nightColor,
-                        //           align: TextAlign.start),
-                        //     ),
-                        //   ],
-                        // )
-                      ],
-                    ),
+                            } else {
+                              return GridView.builder(
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  crossAxisSpacing: 1,
+                                  mainAxisSpacing: 1,
+                                  childAspectRatio: 0.75, // Proporção padrão
+                                ),
+                                shrinkWrap: true,
+                                scrollDirection: Axis.vertical,
+                                itemCount: snapshot.data!.length,
+                                itemBuilder: (context, index) {
+                                  var renders = snapshot.data![index];
+                                  return ContentProduct(
+                                    urlLogo: renders.title.toString(),
+                                    drules: "${renders.desc}",
+                                    title: renders.time.toString(),
+                                    id: renders.id.toString(),
+                                  );
+                                },
+                              );
+                            }
+                          } else if (snapshot.hasError) {
+                            return WidgetLoading();
+                          }
+                          return SizedBox(
+                            height: 300,
+                            child: Center(
+                              child: CircularProgressIndicator(
+                                color: nightColor,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                      // Row(
+                      //   children: [
+                      //     CircleAvatar(
+                      //       child: Icon(
+                      //         Icons.people,
+                      //         color: lightColor,
+                      //       ),
+                      //     ),
+                      //     SizedBox(
+                      //       width: 15,
+                      //     ),
+                      //     RichDefaultText(
+                      //       text: 'Olá, \n',
+                      //       size: 20,
+                      //       wid: SecundaryText(
+                      //           text: '${fullname.toString()}!',
+                      //           color: nightColor,
+                      //           align: TextAlign.start),
+                      //     ),
+                      //   ],
+                      // )
+                    ],
                   ),
-                  Expanded(
-                    child: SizedBox(),
-                  ),
-                ],
-              ),
+                ),
+                SizedBox(),
+              ],
             ),
           );
   }

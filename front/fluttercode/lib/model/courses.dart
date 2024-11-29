@@ -2,8 +2,8 @@ class CoursesModel {
   int? id;
   String? title;
   String? desc;
-  Null? nivel;
-  Null? time;
+  String? nivel;
+  int? time;
   Enterprise? enterprise;
   String? publishedAt;
   String? createdAt;
