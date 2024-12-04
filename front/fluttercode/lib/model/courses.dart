@@ -5,6 +5,7 @@ class CoursesModel {
   String? nivel;
   int? time;
   Enterprise? enterprise;
+  String? urlbanner;
   String? publishedAt;
   String? createdAt;
   String? updatedAt;
@@ -17,6 +18,7 @@ class CoursesModel {
       this.nivel,
       this.time,
       this.enterprise,
+      this.urlbanner,
       this.publishedAt,
       this.createdAt,
       this.updatedAt,
@@ -31,6 +33,7 @@ class CoursesModel {
     enterprise = json['enterprise'] != null
         ? new Enterprise.fromJson(json['enterprise'])
         : null;
+    urlbanner = json['urlbanner'];
     publishedAt = json['published_at'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
@@ -52,6 +55,7 @@ class CoursesModel {
     if (this.enterprise != null) {
       data['enterprise'] = this.enterprise!.toJson();
     }
+    data['urlbanner'] = this.urlbanner;
     data['published_at'] = this.publishedAt;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;

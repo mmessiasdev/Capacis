@@ -78,40 +78,44 @@ class _CourseScreenState extends State<CourseScreen> {
                                       onClick: () {
                                         (Navigator.pop(context));
                                       }),
-                                  const SearchInput(),
                                   Padding(
                                     padding: defaultPaddingVertical,
-                                    // child: SizedBox(
-                                    //     height: 185,
-                                    //     child:
-                                    //         Image.network(render["logourl"])),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(25),
+                                      child: SizedBox(
+                                          child: Image.network(
+                                              render["urlbanner"])),
+                                    ),
                                   ),
                                   Padding(
                                     padding: defaultPaddingVertical,
-                                    child: Container(
-                                      width:
-                                          MediaQuery.of(context).size.width * 1,
-                                      decoration: BoxDecoration(
-                                        color: PrimaryColor,
-                                        borderRadius: BorderRadius.circular(5),
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: SubText(
-                                          color: lightColor,
-                                          text: "${render["desc"]}",
-                                          align: TextAlign.center,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.stretch,
+                                      children: [
+                                        SubText(
+                                          color: nightColor,
+                                          text:
+                                              "Tempo do curso: ${render["time"]} horas",
+                                          align: TextAlign.end,
                                         ),
-                                      ),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        SubText(
+                                          color: nightColor,
+                                          text: "Nível: ${render["nivel"]}",
+                                          align: TextAlign.end,
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                  Padding(
-                                    padding: defaultPaddingVertical,
-                                    child: SecundaryText(
-                                      text: render["nivel"],
-                                      color: nightColor,
-                                      align: TextAlign.start,
-                                    ),
+                                  SizedBox(
+                                    height: 25,
+                                  ),
+                                  Divider(),
+                                  SizedBox(
+                                    height: 25,
                                   ),
                                   Padding(
                                     padding: defaultPaddingVertical,
@@ -124,22 +128,38 @@ class _CourseScreenState extends State<CourseScreen> {
                                         });
                                       },
                                       child: DefaultButton(
-                                        text: "Ativar cashback",
-                                        color: nightColor,
+                                        text: "Editar Curso",
+                                        color: SeventhColor,
                                         padding: defaultPadding,
                                         colorText: lightColor,
                                       ),
                                     ),
                                   ),
-                                  Tips(
-                                      desc:
-                                          "Ao clicar em “Ativar cashback”, você será redirecionado ao site ou app."),
-                                  Tips(
-                                      desc:
-                                          "Qualquer item comprado dentro do nosso link, será acrescentado dentro do seu seu saldo no nosso app!"),
-                                  Tips(
-                                      desc:
-                                          "O saldo do cashback irá cair na sua conta em até no máximo 7 dias uteis.")
+                                  SizedBox(
+                                    height: 25,
+                                  ),
+                                  Divider(),
+                                  SizedBox(
+                                    height: 25,
+                                  ),
+                                  Padding(
+                                    padding: defaultPaddingVertical,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          Uri urlAff =
+                                              Uri.parse(render["time"]);
+                                          _launchURL(urlAff);
+                                        });
+                                      },
+                                      child: DefaultButton(
+                                        text: "Remover Curso",
+                                        color: FifthColor,
+                                        padding: defaultPadding,
+                                        colorText: lightColor,
+                                      ),
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),

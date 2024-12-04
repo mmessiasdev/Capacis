@@ -104,6 +104,7 @@ class AuthController extends GetxController {
           var id = userData['id'];
           var fullname = userData['fullname'];
           var cpf = userData['user']['username'];
+          var idInterprise = userData['enterprise']['id'];
 
           user.value = userFromJson(userResult.body);
 
@@ -113,7 +114,9 @@ class AuthController extends GetxController {
             email: email,
             fullname: fullname,
             cpf: cpf,
+            idInterprise: idInterprise,
           );
+
 
           EasyLoading.showSuccess("Bem vindo ao Benefeer");
           Navigator.of(Get.overlayContext!).pushReplacementNamed('/');

@@ -246,12 +246,13 @@ class RemoteAuthService {
     return listItens;
   }
 
-  Future<List<Plans>> getPlans({
+  Future<List<ProfilesModel>> getEnterpriseProfiles({
     required String? token,
+    required String? id,
   }) async {
-    List<Plans> listItens = [];
+    List<ProfilesModel> listItens = [];
     var response = await client.get(
-      Uri.parse('${url.toString()}/plans'),
+      Uri.parse('${url.toString()}/profiles?enterprise.id_eq=$id'),
       headers: {
         "Content-Type": "application/json",
         "Authorization": "Bearer $token",
@@ -260,7 +261,7 @@ class RemoteAuthService {
     var body = jsonDecode(response.body);
     var itemCount = body;
     for (var i = 0; i < itemCount.length; i++) {
-      listItens.add(Plans.fromJson(itemCount[i]));
+      listItens.add(ProfilesModel.fromJson(itemCount[i]));
     }
     return listItens;
   }
@@ -465,7 +466,7 @@ class RemoteAuthService {
       },
       body: jsonEncode(body),
     );
-    print("Sua respostaaaaaaaaaaaaaaaaaa ${response.body}");
+    print("Sua resposta ${response.body}");
     if (response.statusCode == 200) {
       EasyLoading.showSuccess("Saldo enviado para conta de destino!");
       Navigator.of(Get.overlayContext!).pushReplacementNamed('/');
@@ -498,8 +499,8 @@ class RemoteAuthService {
 
   //${url.toString()}/posts?title_contains=$query&chunk.id_eq=$chunkId
 
-  Future<List<Profile>> getProfiles({required String? token}) async {
-    List<Profile> listItens = [];
+  Future<List<ProfilesModel>> getProfiles({required String? token}) async {
+    List<ProfilesModel> listItens = [];
     var response = await client.get(
       Uri.parse('${url.toString()}/profiles'),
       headers: {
@@ -511,7 +512,7 @@ class RemoteAuthService {
     var body = jsonDecode(response.body);
     var itemCount = body;
     for (var i = 0; i < itemCount.length; i++) {
-      listItens.add(Profile.fromJson(itemCount[i]));
+      listItens.add(ProfilesModel.fromJson(itemCount[i]));
     }
     return listItens;
   }

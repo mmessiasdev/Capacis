@@ -42,6 +42,7 @@ class _AddCourseScreenState extends State<AddCourseScreen> {
   final TextEditingController _videoDescriptionController =
       TextEditingController();
   final TextEditingController _videoUrlController = TextEditingController();
+  final TextEditingController _urlbannerController = TextEditingController();
 
   Future<void> sendCourse() async {
     print(token.toString());
@@ -78,6 +79,7 @@ class _AddCourseScreenState extends State<AddCourseScreen> {
         "title": _courseNameController.text,
         "desc": _courseDescriptionController.text,
         "enterprise": id,
+        "urlbanner": _urlbannerController.text,
         "videos": videoIds, // Relaciona os IDs dos vídeos ao curso
       };
 
@@ -138,6 +140,11 @@ class _AddCourseScreenState extends State<AddCourseScreen> {
               TextField(
                 controller: _courseDescriptionController,
                 decoration: InputDecoration(labelText: "Descrição do Curso"),
+                maxLines: 3,
+              ),
+               TextField(
+                controller: _urlbannerController,
+                decoration: InputDecoration(labelText: "URL de imagem do Curso"),
                 maxLines: 3,
               ),
               SizedBox(height: 20),

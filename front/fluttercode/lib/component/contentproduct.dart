@@ -1,4 +1,5 @@
 import 'package:Consult/component/colors.dart';
+import 'package:Consult/component/padding.dart';
 import 'package:Consult/component/texts.dart';
 import 'package:Consult/view/courses/coursescreen.dart';
 import 'package:flutter/material.dart';
@@ -35,55 +36,48 @@ class ContentProduct extends StatelessWidget {
           ));
         },
         child: Container(
-            width: 150,
-            decoration: BoxDecoration(
-              color: bgcolor ?? lightColor,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  SizedBox(
-                    width: 75,
-                    height: 100,
-                    // child: Image.network(
-                    //   urlLogo ?? "",
-                    //   fit: BoxFit.contain,
-                    // ),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: FourtyColor,
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: SubText(
-                        color: lightColor,
-                        text: drules,
-                        align: TextAlign.center,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  SecundaryText(
-                    text: title,
-                    color: nightColor,
-                    align: TextAlign.start,
-                    maxl: maxl,
-                    over: over,
-                  ),
-                ],
+          decoration: BoxDecoration(
+            color: bgcolor ?? lightColor,
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: [
+              BoxShadow(
+                color:
+                    Colors.black.withOpacity(0.2), // Cor e opacidade da sombra
+                spreadRadius: 2, // Expansão da sombra
+                blurRadius: 5, // Desfoque
+                offset: Offset(0, 3), // Deslocamento (horizontal, vertical)
               ),
-            )),
+            ],
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              ClipRRect(
+                borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10)),
+                child: Image.network(
+                  urlLogo ?? "",
+                  fit: BoxFit.contain,
+                ),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              Padding(
+                padding: defaultPadding,
+                child: SecundaryText(
+                  text: title,
+                  color: nightColor,
+                  align: TextAlign.start,
+                  maxl: maxl,
+                  over: over,
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

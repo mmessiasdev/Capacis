@@ -10,6 +10,8 @@ import 'package:Consult/model/courses.dart';
 import 'package:Consult/service/remote/auth.dart';
 import 'package:Consult/view/account/account.dart';
 import 'package:Consult/view/courses/addcourse.dart';
+import 'package:Consult/view/courses/ourcourses.dart';
+import 'package:Consult/view/profiles/employeescreen.dart';
 import 'package:flutter/material.dart';
 import 'package:Consult/component/colors.dart';
 import 'package:Consult/component/padding.dart';
@@ -89,7 +91,9 @@ class _HomePageState extends State<HomePage> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => AddCourseScreen()),
+                                    builder: (context) => AccountScreen(
+                                          buttom: true,
+                                        )),
                               ),
                             );
                           },
@@ -136,6 +140,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     print(token);
     print(fullname);
+
     return token == null
         ? const SizedBox()
         : SafeArea(
@@ -153,24 +158,43 @@ class _HomePageState extends State<HomePage> {
                 SizedBox(
                   height: 25,
                 ),
-                Padding(
-                  padding: defaultPaddingHorizon,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      SearchInput(),
-                      SizedBox(
-                        height: 25,
-                      ),
-                      Row(
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Padding(
+                      padding: defaultPaddingHorizon,
+                      child: SearchInput(),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Padding(
+                      padding: defaultPadding,
+                      child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
+                          GestureDetector(
+                            child: IconList(
+                                onClick: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => OurCourses(),
+                                    ),
+                                  );
+                                },
+                                icon: Icons.movie,
+                                title: "Nossos cursos"),
+                          ),
                           IconList(
-                              onClick: () {},
-                              icon: Icons.movie,
-                              title: "Nossos cursos"),
-                          IconList(
-                              onClick: () {},
+                              onClick: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => EmployeeScreen(),
+                                  ),
+                                );
+                              },
                               icon: Icons.people,
                               title: "Colaboradores"),
                           IconList(
@@ -180,10 +204,13 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ],
                       ),
-                      SizedBox(
-                        height: 25,
-                      ),
-                      GestureDetector(
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Padding(
+                      padding: defaultPaddingHorizon,
+                      child: GestureDetector(
                         onTap: () {
                           (
                             Navigator.push(
@@ -213,76 +240,106 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                       ),
-                      FutureBuilder<List<CoursesModel>>(
-                        future: RemoteAuthService().getCourses(token: token),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                                  ConnectionState.done &&
-                              snapshot.hasData) {
-                            if (snapshot.data!.isEmpty) {
-                              return const Center(
-                                child: Text(
-                                    "Nenhuma loja disponível no momento."),
-                              );
-                            } else {
-                              return GridView.builder(
-                                gridDelegate:
-                                    const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  crossAxisSpacing: 1,
-                                  mainAxisSpacing: 1,
-                                  childAspectRatio: 0.75, // Proporção padrão
-                                ),
-                                shrinkWrap: true,
-                                scrollDirection: Axis.vertical,
-                                itemCount: snapshot.data!.length,
-                                itemBuilder: (context, index) {
-                                  var renders = snapshot.data![index];
-                                  return ContentProduct(
-                                    urlLogo: renders.title.toString(),
-                                    drules: "${renders.desc}",
-                                    title: renders.time.toString(),
-                                    id: renders.id.toString(),
-                                  );
-                                },
-                              );
-                            }
-                          } else if (snapshot.hasError) {
-                            return WidgetLoading();
-                          }
-                          return SizedBox(
-                            height: 300,
-                            child: Center(
-                              child: CircularProgressIndicator(
+                    ),
+                    SizedBox(
+                      height: 35,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                          color: SecudaryColor,
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(20),
+                              topRight: Radius.circular(20))),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            height: 35,
+                          ),
+                          Padding(
+                            padding: defaultPadding,
+                            child: SecundaryText(
+                                text: 'Cursos da empresa',
                                 color: nightColor,
-                              ),
-                            ),
-                          );
-                        },
+                                align: TextAlign.start),
+                          ),
+                          FutureBuilder<List<CoursesModel>>(
+                            future:
+                                RemoteAuthService().getCourses(token: token),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                      ConnectionState.done &&
+                                  snapshot.hasData) {
+                                if (snapshot.data!.isEmpty) {
+                                  return const Center(
+                                    child: Text(
+                                        "Nenhuma loja disponível no momento."),
+                                  );
+                                } else {
+                                  return ListView.builder(
+                                    // gridDelegate:
+                                    //     const SliverGridDelegateWithFixedCrossAxisCount(
+                                    //   crossAxisCount: 1,
+                                    //   crossAxisSpacing: 1,
+                                    //   mainAxisSpacing: 1,
+                                    //   childAspectRatio: 0.75, // Proporção padrão
+                                    // ),
+                                    shrinkWrap: true,
+                                    physics: NeverScrollableScrollPhysics(),
+                                    scrollDirection: Axis.vertical,
+                                    itemCount: snapshot.data!.length,
+                                    itemBuilder: (context, index) {
+                                      var renders = snapshot.data![index];
+                                      return ContentProduct(
+                                        urlLogo: renders.urlbanner.toString(),
+                                        drules: "${renders.desc}",
+                                        title: renders.time.toString(),
+                                        id: renders.id.toString(),
+                                      );
+                                    },
+                                  );
+                                }
+                              } else if (snapshot.hasError) {
+                                return WidgetLoading();
+                              }
+                              return SizedBox(
+                                height: 300,
+                                child: Center(
+                                  child: CircularProgressIndicator(
+                                    color: nightColor,
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                          SizedBox(
+                            height: 35,
+                          ),
+                        ],
                       ),
-                      // Row(
-                      //   children: [
-                      //     CircleAvatar(
-                      //       child: Icon(
-                      //         Icons.people,
-                      //         color: lightColor,
-                      //       ),
-                      //     ),
-                      //     SizedBox(
-                      //       width: 15,
-                      //     ),
-                      //     RichDefaultText(
-                      //       text: 'Olá, \n',
-                      //       size: 20,
-                      //       wid: SecundaryText(
-                      //           text: '${fullname.toString()}!',
-                      //           color: nightColor,
-                      //           align: TextAlign.start),
-                      //     ),
-                      //   ],
-                      // )
-                    ],
-                  ),
+                    ),
+                    // Row(
+                    //   children: [
+                    //     CircleAvatar(
+                    //       child: Icon(
+                    //         Icons.people,
+                    //         color: lightColor,
+                    //       ),
+                    //     ),
+                    //     SizedBox(
+                    //       width: 15,
+                    //     ),
+                    //     RichDefaultText(
+                    //       text: 'Olá, \n',
+                    //       size: 20,
+                    //       wid: SecundaryText(
+                    //           text: '${fullname.toString()}!',
+                    //           color: nightColor,
+                    //           align: TextAlign.start),
+                    //     ),
+                    //   ],
+                    // )
+                  ],
                 ),
                 SizedBox(),
               ],
