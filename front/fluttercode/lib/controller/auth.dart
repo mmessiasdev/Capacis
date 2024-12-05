@@ -106,6 +106,8 @@ class AuthController extends GetxController {
           var cpf = userData['user']['username'];
           var idInterprise = userData['enterprise']['id'];
 
+          print(idInterprise);
+
           user.value = userFromJson(userResult.body);
 
           await LocalAuthService().storeToken(token);
@@ -116,7 +118,6 @@ class AuthController extends GetxController {
             cpf: cpf,
             idInterprise: idInterprise,
           );
-
 
           EasyLoading.showSuccess("Bem vindo ao Benefeer");
           Navigator.of(Get.overlayContext!).pushReplacementNamed('/');
@@ -340,59 +341,6 @@ class AuthController extends GetxController {
       print("Erro: $e");
     }
   }
-
-  // void VerifiquedBuyLocalStore({
-  //   required int profileId,
-  //   required int localstoreId,
-  //   required String? fileName,
-  //   required List<int>? selectFile,
-  // }) async {
-  //   try {
-  //     EasyLoading.show(
-  //       status: 'Loading...',
-  //       dismissOnTap: false,
-  //     );
-  //     var token = await LocalAuthService().getSecureToken("token");
-  //     var result = await RemoteAuthService().addVerificationLocalStore(
-  //         profile: profileId, local_store: localstoreId, token: token);
-  //     EasyLoading.showSuccess("Seu comprovante foi enviado!");
-
-  //     if (result.statusCode == 200) {
-  //       int receiptId = json.decode(result.body)['id'];
-  //       print(receiptId);
-  //       var url = Uri.parse('$urlEnv/upload');
-  //       var request = http.MultipartRequest("POST", url);
-  //       request.files.add(await http.MultipartFile.fromBytes(
-  //         'files',
-  //         selectFile!,
-  //         contentType: MediaType('image', 'jpeg'),
-  //         filename: fileName ?? "Benefeer File",
-  //       ));
-
-  //       request.files.add(await http.MultipartFile.fromString("ref", "post"));
-  //       request.files
-  //           .add(await http.MultipartFile.fromString("refId", "${receiptId}"));
-
-  //       request.files
-  //           .add(await http.MultipartFile.fromString("field", "files"));
-
-  //       request.headers.addAll({"Authorization": "Bearer $token"});
-  //       request.send().then((response) {
-  //         if (response.statusCode == 200) {
-  //           print("FileUpload Successfuly");
-  //           Navigator.of(Get.overlayContext!).pushReplacementNamed('/');
-  //         } else {
-  //           print("FileUpload Error");
-  //         }
-  //       });
-  //     }
-  //   } catch (e) {
-  //     print(e);
-  //     EasyLoading.showError('Alguma coisa deu errado.');
-  //   } finally {
-  //     EasyLoading.dismiss();
-  //   }
-  // }
 
   void signOut() async {
     user.value = null;

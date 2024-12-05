@@ -5,8 +5,8 @@ import 'package:Consult/view/courses/coursescreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-class ContentProduct extends StatelessWidget {
-  ContentProduct(
+class CourseContent extends StatelessWidget {
+  CourseContent(
       {super.key,
       required this.drules,
       required this.title,
@@ -57,10 +57,12 @@ class ContentProduct extends StatelessWidget {
                 borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(10),
                     topRight: Radius.circular(10)),
-                child: Image.network(
-                  urlLogo ?? "",
-                  fit: BoxFit.contain,
-                ),
+                child: urlLogo == ""
+                    ? SizedBox()
+                    : Image.network(
+                        urlLogo ?? "",
+                        fit: BoxFit.contain,
+                      ),
               ),
               const SizedBox(
                 height: 15,

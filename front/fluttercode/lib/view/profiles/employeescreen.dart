@@ -1,5 +1,6 @@
+import 'package:Consult/component/colaboratorcontent.dart';
 import 'package:Consult/component/colors.dart';
-import 'package:Consult/component/contentproduct.dart';
+import 'package:Consult/component/coursecontent.dart';
 import 'package:Consult/component/padding.dart';
 import 'package:Consult/component/widgets/header.dart';
 import 'package:Consult/model/profiles.dart';
@@ -72,8 +73,8 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
                             if (renders != null) {
                               return Padding(
                                 padding: defaultPaddingHorizon,
-                                child: ContentProduct(
-                                  urlLogo: renders.fullname,
+                                child: ContentColaborator(
+                                  name: renders.fullname.toString(),
                                   drules: "${renders.email}",
                                   title: renders.id.toString(),
                                   id: renders.id.toString(),

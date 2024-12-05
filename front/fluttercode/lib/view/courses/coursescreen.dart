@@ -62,7 +62,7 @@ class _CourseScreenState extends State<CourseScreen> {
                 children: [
                   FutureBuilder<Map>(
                       future: RemoteAuthService()
-                          .getCouses(token: token, id: widget.id),
+                          .getOneCourse(token: token, id: widget.id),
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
                           var render = snapshot.data!;

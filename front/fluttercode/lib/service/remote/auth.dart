@@ -140,10 +140,11 @@ class RemoteAuthService {
 
   Future<List<CoursesModel>> getCourses({
     required String? token,
+    required String interpriseId,
   }) async {
     List<CoursesModel> listItens = [];
     var response = await client.get(
-      Uri.parse('${url.toString()}/courses'),
+      Uri.parse('${url.toString()}/courses?enterprise.id_eq=$interpriseId'),
       headers: {
         "Content-Type": "application/json",
         "Authorization": "Bearer $token",
@@ -158,26 +159,7 @@ class RemoteAuthService {
     return listItens;
   }
 
-  Future<List<CategoryModel>> getCategories({
-    required String? token,
-  }) async {
-    List<CategoryModel> listItens = [];
-    var response = await client.get(
-      Uri.parse('${url.toString()}/categories'),
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer $token",
-      },
-    );
-    var body = jsonDecode(response.body);
-    var itemCount = body;
-    for (var i = 0; i < itemCount.length; i++) {
-      listItens.add(CategoryModel.fromJson(itemCount[i]));
-    }
-    return listItens;
-  }
-
-  Future<Map> getCouses({
+  Future<Map> getOneCourse({
     required String id,
     required String? token,
   }) async {
@@ -191,59 +173,6 @@ class RemoteAuthService {
     );
     var itens = json.decode(response.body);
     return itens;
-  }
-
-  // Future<Map> getStore({
-  //   required String id,
-  //   required String? token,
-  // }) async {
-  //   var response = await client.get(
-  //     Uri.parse('${url.toString()}/online-stores/$id'),
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       "Authorization": "Bearer $token",
-  //       'ngrok-skip-browser-warning': "true"
-  //     },
-  //   );
-  //   var itens = json.decode(response.body);
-  //   return itens;
-  // }
-
-  Future<Map> getOneCategory({
-    required String id,
-    required String? token,
-  }) async {
-    var response = await client.get(
-      Uri.parse('${url.toString()}/categories/$id'),
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer $token",
-        'ngrok-skip-browser-warning': "true"
-      },
-    );
-    var itens = json.decode(response.body);
-    return itens;
-  }
-
-  Future<List<OnlineStores>> getOneCategoryStories({
-    required String? token,
-    required String? id,
-  }) async {
-    List<OnlineStores> listItens = [];
-    var response = await client.get(
-      Uri.parse('${url.toString()}/categories/$id'),
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer $token",
-        'ngrok-skip-browser-warning': "true"
-      },
-    );
-    var body = jsonDecode(response.body);
-    var itemCount = body['online_stores'];
-    for (var i = 0; i < itemCount.length; i++) {
-      listItens.add(OnlineStores.fromJson(itemCount[i]));
-    }
-    return listItens;
   }
 
   Future<List<ProfilesModel>> getEnterpriseProfiles({

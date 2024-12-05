@@ -1,6 +1,6 @@
 import 'package:Consult/component/buttons.dart';
 import 'package:Consult/component/containersLoading.dart';
-import 'package:Consult/component/contentproduct.dart';
+import 'package:Consult/component/coursecontent.dart';
 import 'package:Consult/component/inputdefault.dart';
 import 'package:Consult/component/widgets/header.dart';
 import 'package:Consult/component/widgets/iconlist.dart';
@@ -33,13 +33,15 @@ class _HomePageState extends State<HomePage> {
   String screen = "online";
   bool isButtonEnabled = false;
 
-  String? token;
   String? fname;
   String? fullname;
   String? colaboratorId;
 
   var id;
   bool public = false;
+
+  var token;
+  var idInterprise;
 
   @override
   void initState() {
@@ -51,12 +53,15 @@ class _HomePageState extends State<HomePage> {
     var strToken = await LocalAuthService().getSecureToken("token");
     var strfullname = await LocalAuthService().getFullName("fullname");
 
-    if (mounted) {
-      setState(() {
-        token = strToken;
-        fullname = strfullname;
-      });
-    }
+    var strIdInterprise =
+        await LocalAuthService().getIdInterprise("idInterprise");
+
+    setState(() {
+      token = strToken.toString();
+      fullname = strfullname;
+
+      idInterprise = strIdInterprise.toString();
+    });
   }
 
   TextEditingController cpf = TextEditingController();
@@ -264,8 +269,8 @@ class _HomePageState extends State<HomePage> {
                                 align: TextAlign.start),
                           ),
                           FutureBuilder<List<CoursesModel>>(
-                            future:
-                                RemoteAuthService().getCourses(token: token),
+                            future: RemoteAuthService().getCourses(
+                                token: token, interpriseId: idInterprise),
                             builder: (context, snapshot) {
                               if (snapshot.connectionState ==
                                       ConnectionState.done &&
@@ -290,7 +295,7 @@ class _HomePageState extends State<HomePage> {
                                     itemCount: snapshot.data!.length,
                                     itemBuilder: (context, index) {
                                       var renders = snapshot.data![index];
-                                      return ContentProduct(
+                                      return CourseContent(
                                         urlLogo: renders.urlbanner.toString(),
                                         drules: "${renders.desc}",
                                         title: renders.time.toString(),

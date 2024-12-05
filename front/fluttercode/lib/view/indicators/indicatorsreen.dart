@@ -1,23 +1,22 @@
+import 'package:Consult/component/colaboratorcontent.dart';
 import 'package:Consult/component/colors.dart';
 import 'package:Consult/component/coursecontent.dart';
 import 'package:Consult/component/padding.dart';
 import 'package:Consult/component/widgets/header.dart';
-import 'package:Consult/component/widgets/plancontainer.dart';
-import 'package:Consult/model/courses.dart';
+import 'package:Consult/model/profiles.dart';
 import 'package:Consult/service/local/auth.dart';
 import 'package:Consult/service/remote/auth.dart';
-import 'package:Consult/view/courses/coursescreen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-class OurCourses extends StatefulWidget {
-  const OurCourses({super.key});
+class IndicatorsScreen extends StatefulWidget {
+  const IndicatorsScreen({super.key});
 
   @override
-  State<OurCourses> createState() => _OurCoursesState();
+  State<IndicatorsScreen> createState() => _IndicatorsScreenState();
 }
 
-class _OurCoursesState extends State<OurCourses> {
+class _IndicatorsScreenState extends State<IndicatorsScreen> {
   var token;
   var idInterprise;
 
@@ -48,7 +47,7 @@ class _OurCoursesState extends State<OurCourses> {
             Padding(
               padding: defaultPaddingHorizon,
               child: MainHeader(
-                  title: "Nossos Planos!",
+                  title: "Colaboradores",
                   maxl: 1,
                   icon: Icons.arrow_back_ios,
                   onClick: () {
@@ -59,9 +58,10 @@ class _OurCoursesState extends State<OurCourses> {
               height: 20,
             ),
             Center(
-              child: FutureBuilder<List<CoursesModel>>(
-                  future: RemoteAuthService().getCourses(
-                      token: token, interpriseId: idInterprise.toString()),
+              child: FutureBuilder<List<ProfilesModel>>(
+                  future: RemoteAuthService().getEnterpriseProfiles(
+                      token: token,
+                      id: idInterprise.toString() ?? 1.toString()),
                   builder: (context, planSnapshot) {
                     if (planSnapshot.hasData) {
                       return ListView.builder(
@@ -73,10 +73,10 @@ class _OurCoursesState extends State<OurCourses> {
                             if (renders != null) {
                               return Padding(
                                 padding: defaultPaddingHorizon,
-                                child: CourseContent(
-                                  urlLogo: renders.urlbanner.toString(),
-                                  drules: "${renders.desc}",
-                                  title: renders.time.toString(),
+                                child: ContentColaborator(
+                                  name: renders.fullname.toString(),
+                                  drules: "${renders.email}",
+                                  title: renders.id.toString(),
                                   id: renders.id.toString(),
                                 ),
                               );

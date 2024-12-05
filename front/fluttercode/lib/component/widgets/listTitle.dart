@@ -1,5 +1,5 @@
 import 'package:Consult/component/colors.dart';
-import 'package:Consult/component/contentproduct.dart';
+import 'package:Consult/component/coursecontent.dart';
 import 'package:Consult/component/texts.dart';
 import 'package:flutter/material.dart';
 

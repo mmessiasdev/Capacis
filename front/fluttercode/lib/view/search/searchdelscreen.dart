@@ -1,13 +1,13 @@
 import 'package:Consult/component/colors.dart';
 import 'package:Consult/component/containersLoading.dart';
-import 'package:Consult/component/contentproduct.dart';
+import 'package:Consult/component/coursecontent.dart';
 import 'package:Consult/component/texts.dart';
 import 'package:Consult/model/stores.dart';
 import 'package:Consult/service/local/auth.dart';
 import 'package:Consult/service/remote/auth.dart';
 import 'package:Consult/component/colors.dart';
 import 'package:Consult/component/containersLoading.dart';
-import 'package:Consult/component/contentproduct.dart';
+import 'package:Consult/component/coursecontent.dart';
 import 'package:Consult/model/stores.dart';
 import 'package:Consult/service/local/auth.dart';
 import 'package:Consult/service/remote/auth.dart';
@@ -63,7 +63,7 @@ class _RenderContentsState extends State<RenderContents> {
                       itemBuilder: (context, index) {
                         var render = snapshot.data![index];
                         return GestureDetector(
-                          child: ContentProduct(
+                          child: CourseContent(
                               urlLogo: render.logourl.toString(),
                               maxl: 1,
                               over: TextOverflow.fade,
